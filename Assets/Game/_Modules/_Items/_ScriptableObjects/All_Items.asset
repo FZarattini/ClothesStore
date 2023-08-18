@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3d3f2be193895574ea1d8b9fb9c2c9b8, type: 3}
-  m_Name: StoreStock
+  m_Name: All_Items
   m_EditorClassIdentifier: 
   _itemsList:
   - {fileID: 11400000, guid: 327e4d50a75659b45922330a9f0fc5e0, type: 2}
@@ -19,4 +19,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 582765ce4ae3ff649964dd0994aab770, type: 2}
   - {fileID: 11400000, guid: b54f8cb3cc572884489d6d3eb748b617, type: 2}
   - {fileID: 11400000, guid: dd4d40623337777478fc8da0c165be15, type: 2}
-  _defaultStoreItems: {fileID: 11400000, guid: ec69a1629dfab4e4c99ed81327260988, type: 2}
+  _defaultStoreItems: []

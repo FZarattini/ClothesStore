@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class WardrobeTrigger : MonoBehaviour, IInteractables
 {
-
     public static Action OnWardrobeInteraction = null;
     public void Interact()
     {

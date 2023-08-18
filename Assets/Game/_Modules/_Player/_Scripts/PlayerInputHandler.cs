@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 public class PlayerInputHandler : MonoBehaviour
 {
     [SerializeField] PlayerData _playerData;
-    [SerializeField] CharacterController _characterController;
+    [SerializeField] PlayerController _characterController;
     [SerializeField] PlayerInteractionHandler _interactionHandler;
 
     private PlayerInputs input = null;

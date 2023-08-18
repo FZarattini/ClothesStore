@@ -1,35 +1,130 @@
 using Doozy.Runtime.UIManager.Containers;
 using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
 using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class StoreController : MonoBehaviour
 {
     [Title("References")]
-    [SerializeField] StoreStockSO _storeStock;
+    [SerializeField] ItemListSO _storeStock;
+    [SerializeField] ItemListSO _playerInventory;
     [SerializeField] GameObject _itemSlotPrefab;
-    [SerializeField] Transform _content;
+    [SerializeField] Transform _buyContent;
+    [SerializeField] Transform _sellContent;
+    [SerializeField] ScrollRect _buyScrollView;
+    [SerializeField] ScrollRect _sellScrollView;
 
-    [SerializeField] UIContainer _buyStore;
-    [SerializeField] UIContainer _sellStore;
+    [SerializeField] TextMeshProUGUI _emptyStockMessage;
+    [SerializeField] TextMeshProUGUI _emptyInventoryMessage;
+
+    [SerializeField] UIContainer _storeContainer;
+
+
+    public static Action OnStoreOpen = null;
+    public static Action OnStoreClose = null;
+
+    private void OnEnable()
+    {
+        ItemSlot.OnBuyItem += RemoveStockItem;
+        ItemSlot.OnSellItem += AddStockItem;
+    }
+
+    private void OnDisable()
+    {
+        ItemSlot.OnBuyItem -= RemoveStockItem;
+        ItemSlot.OnSellItem -= AddStockItem;
+    }
+
     public void OpenBuyStore()
     {
-        foreach (ClothingItem c in _storeStock.StoreItems)
-        {
-            var itemSlotObject = GameObject.Instantiate(_itemSlotPrefab, _content);
-            var itemSlot = itemSlotObject.GetComponent<ItemSlot>();
+        OnStoreOpen?.Invoke();
+        _buyScrollView.gameObject.SetActive(true);
+        _sellScrollView.gameObject.SetActive(false);
 
-            itemSlot.SetItemSlot(c.Data);
+        CheckEmptyMessage(true);
+
+        ClearItemSlots(_buyContent);
+
+        foreach (ClothingItemData c in _storeStock.ItemsList)
+        {
+            InstantiateItem(c, true);
         }
 
-        _buyStore.Show();
+        _storeContainer.Show();
     }
 
     public void OpenSellStore()
     {
-        _sellStore.Show();
+        OnStoreOpen?.Invoke();
+        _buyScrollView.gameObject.SetActive(false);
+        _sellScrollView.gameObject.SetActive(true);
+
+        CheckEmptyMessage(false);
+
+        ClearItemSlots(_sellContent);
+
+        foreach (ClothingItemData c in _playerInventory.ItemsList)
+        {
+            InstantiateItem(c, false);
+        }
+
+        _storeContainer.Show();
+    }
+
+    public void CloseStore()
+    {
+        OnStoreClose?.Invoke();
+        _storeContainer.Hide();
+    }
+
+    void AddStockItem(ClothingItemData itemData)
+    {
+        _storeStock.AddItem(itemData);
+        CheckEmptyMessage(false);
+    }
+
+    void RemoveStockItem(ClothingItemData itemData)
+    {
+        _storeStock.RemoveItem(itemData);
+        CheckEmptyMessage(true);
+    }
+
+    void InstantiateItem(ClothingItemData data, bool inStock)
+    {
+        var content = inStock ? _buyContent : _sellContent;
+
+        var itemSlotObject = Instantiate(_itemSlotPrefab, content);
+        var itemSlot = itemSlotObject.GetComponent<ItemSlot>();
+
+        itemSlot.SetItemSlot(data, inStock);
+    }
+
+    void CheckEmptyMessage(bool isBuyShop)
+    {
+        if (isBuyShop)
+        {
+            _emptyInventoryMessage.gameObject.SetActive(false);
+            _emptyStockMessage.gameObject.SetActive(_storeStock.ItemsList.Count == 0);
+        }
+        else
+        {
+            _emptyStockMessage.gameObject.SetActive(false);
+            _emptyInventoryMessage.gameObject.SetActive(_playerInventory.ItemsList.Count == 0);
+        }
+    }
+
+    void ClearItemSlots(Transform content)
+    {
+        while (content.childCount > 0)
+        {
+            DestroyImmediate(content.GetChild(0).gameObject);
+        }
     }
 }

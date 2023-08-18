@@ -23,6 +23,8 @@ public class PlayerInteractionHandler : MonoBehaviour
 
     public void Interact()
     {
+        if (currentInteractable == null) return;
+
         currentInteractable.Interact();
     }
 

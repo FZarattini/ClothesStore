@@ -6,4 +6,5 @@ using UnityEngine;
 public class PlayerData : ScriptableObject
 {
     public float PlayerSpeed;
+    public int PlayerInitialCurrency;
 }

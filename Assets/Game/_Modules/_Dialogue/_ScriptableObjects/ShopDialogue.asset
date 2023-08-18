@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ShopDialogue
   m_EditorClassIdentifier: 
   dialogueText:
+  - Why...Why are you naked? Well..
   - Hello and welcome to Finest Threads, the best clothing shop in town!
   - Anything you buy you can try at the wardrobe on the other side of that wall,
     to your right!

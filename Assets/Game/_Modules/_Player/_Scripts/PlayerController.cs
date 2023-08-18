@@ -4,20 +4,22 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class CharacterController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
-    [Title("Object References")]
+    [Title("References")]
+    [SerializeField] PlayerData _playerData;
     [SerializeField] Animator _animator;
     [SerializeField] SpriteRenderer _spriteRenderer;
     [SerializeField] Rigidbody2D _rigidBody;
-    [SerializeField] Vector2 facingDirection;
+    [SerializeField] PlayerEquipmentController _playerEquipmentController;
+
+    [Title("Currency")]
+    [SerializeField, ReadOnly] int currency;
 
     [SerializeField] AnimationStates defaultState;
     [SerializeField, ReadOnly] AnimationStates currentState;
 
-
-    public Vector2 FacingDirection => facingDirection;
-
+    public int Currency => currency;
 
     private enum AnimationStates
     {
@@ -27,6 +29,21 @@ public class CharacterController : MonoBehaviour
         WALK_UP,
         WALK_HORIZONTAL,
         WALK_DOWN,
+    }
+
+    private void OnEnable()
+    {
+        InventoryManager.OnInventoryOpen += ForceIdleDownState;
+    }
+
+    private void OnDisable()
+    {
+        InventoryManager.OnInventoryOpen -= ForceIdleDownState;
+    }
+
+    private void Awake()
+    {
+        currency = _playerData.PlayerInitialCurrency;
     }
 
     private void Start()
@@ -160,5 +177,23 @@ public class CharacterController : MonoBehaviour
     bool IsIdleState()
     {
         return currentState == AnimationStates.IDLE_HORIZONTAL || currentState == AnimationStates.IDLE_UP || currentState == AnimationStates.IDLE_DOWN;
+    }
+
+    // Spends player money
+    public void DeductCurrency(int value)
+    {
+        currency -= value;
+    }
+
+    // Add player money
+    public void AddCurrency(int value)
+    {
+        currency += value;
+    }
+
+    // Forces player to look down to the camera
+    void ForceIdleDownState()
+    {
+        ChangeAnimatorState(AnimationStates.IDLE_DOWN);   
     }
 }
