@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ClothingItemData", menuName = "ScriptableObjects/Clothes/New Clothing Item Data", order = 1)]
 public class ClothingItemData : ScriptableObject
 {
+    public string id;
     public ClothesType clothesType;
     public Sprite itemIcon;
     public int buyPrice;

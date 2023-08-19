@@ -13,11 +13,6 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
 
-    [Title("Dialogues")]
-    [SerializeField] DialogueSO _shopDialogue;
-    [SerializeField] DialogueSO _leaveShopDialogue;
-    [SerializeField] DialogueSO _changeClothesDialogue;
-
     [Title("References")]
     [SerializeField, Sirenix.OdinInspector.ReadOnly] DialogueSO currentDialogue;
     [SerializeField] UIContainer _dialogueContainer;
@@ -49,30 +44,46 @@ public class DialogueManager : MonoBehaviour
 
     private void OnEnable()
     {
-        ShopkeeperTrigger.OnShopkeeperInteraction += StartShopDialogueRoutine;
+        ShopkeeperTrigger.OnShopkeeperInteraction += StartDialogueRoutine;
+        LeaveShopTrigger.OnLeaveShopTriggered += StartDialogueRoutine;
+        BarrelTrigger.OnBarrelInteraction += StartDialogueRoutine;
+        DoorTrigger.OnDoorInteraction += StartDialogueRoutine;
+        NightPaintingTrigger.OnNightPaintingInteraction += StartDialogueRoutine;
+        DayPaintingTrigger.OnDayPaintingInteraction += StartDialogueRoutine;
         PlayerInputHandler.OnNextDialog += CheckNextLine;
     }
 
     private void OnDisable()
     {
-        ShopkeeperTrigger.OnShopkeeperInteraction -= StartShopDialogueRoutine;
+        ShopkeeperTrigger.OnShopkeeperInteraction -= StartDialogueRoutine;
+        LeaveShopTrigger.OnLeaveShopTriggered -= StartDialogueRoutine;
+        BarrelTrigger.OnBarrelInteraction -= StartDialogueRoutine;
+        DoorTrigger.OnDoorInteraction -= StartDialogueRoutine;
+        NightPaintingTrigger.OnNightPaintingInteraction -= StartDialogueRoutine;
+        DayPaintingTrigger.OnDayPaintingInteraction -= StartDialogueRoutine;
         PlayerInputHandler.OnNextDialog -= CheckNextLine;
     }
 
 
-
-    void StartShopDialogueRoutine(Action callback)
+    // Starts a new dialogue, starting from the last line if dialogue has been completed before
+    void StartDialogueRoutine(DialogueSO dialogue, Action callback)
     {
         OnDialogueStart?.Invoke();
 
         _dialogueContainer.Show();
 
+        if (!dialogue.completed)
+            dialogueIndex = 0;
+        else
+            dialogueIndex = dialogue.dialogueText.Count - 1;
+
         _dialogueText.text = string.Empty;
         currentCallback = callback;
-        currentDialogue = _shopDialogue;
+        currentDialogue = dialogue;
         StartCoroutine(DialogueRoutine(callback));
     }
 
+    // Writes the dialogues lines character by character
     IEnumerator DialogueRoutine(Action callback)
     {
         foreach (char c in currentDialogue.dialogueText[dialogueIndex].ToCharArray())
@@ -86,15 +97,17 @@ public class DialogueManager : MonoBehaviour
         yield return null;
     }
 
+    // Checks if there is a next line to trigger
     void CheckNextLine()
     {
         if (!writingLine && !choicesEnabled)
             NextLine();
     }
 
+    // Starts next line of dialogue
     void NextLine()
     {
-        if (dialogueIndex < _shopDialogue.dialogueText.Count - 1)
+        if (dialogueIndex < currentDialogue.dialogueText.Count - 1)
         {
             dialogueIndex++;
             _dialogueText.text = string.Empty;
@@ -106,11 +119,14 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    // Finishes the dialogue
     void FinishDialogue()
     {
         StopAllCoroutines();
         _dialogueText.text = string.Empty;
         GameManager.Instance.OnDialogue = false;
+        currentDialogue.completed = true;
+        currentDialogue = null;
         _dialogueContainer.Hide();
 
         OnDialogueFinish?.Invoke();

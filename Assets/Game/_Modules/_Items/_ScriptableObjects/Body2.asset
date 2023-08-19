@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb9a6e748c3cedb49a4347ce91dc6660, type: 3}
   m_Name: Body2
   m_EditorClassIdentifier: 
+  id: Body2
   clothesType: 1
-  itemIcon: {fileID: -415910730, guid: d3e389da79299264db148cf5f8a6d0c4, type: 3}
+  itemIcon: {fileID: -616785486, guid: d3e389da79299264db148cf5f8a6d0c4, type: 3}
   buyPrice: 40
   sellingPrice: 40

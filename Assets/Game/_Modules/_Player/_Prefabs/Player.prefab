@@ -171,6 +171,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hatAnchor: {fileID: 5400490966143045342}
   _bodyAnchor: {fileID: 7668683970457797530}
+  _hatAnimator: {fileID: 0}
+  _bodyAnimator: {fileID: 0}
 --- !u!61 &5555088816985510960
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -240,7 +242,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6394474279907268247}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.48316383, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -323,7 +325,7 @@ SpriteRenderer:
   m_SortingLayerID: 497991315
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 2077312321, guid: b025a83e848a73b4693ed3200949b5fd, type: 3}
+  m_Sprite: {fileID: -927406940, guid: b025a83e848a73b4693ed3200949b5fd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

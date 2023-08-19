@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb9a6e748c3cedb49a4347ce91dc6660, type: 3}
   m_Name: Hat3
   m_EditorClassIdentifier: 
+  id: Hat3
   clothesType: 0
-  itemIcon: {fileID: 1367409949, guid: b4216da670244ce40bee5bd638a0593c, type: 3}
+  itemIcon: {fileID: -748015478, guid: b4216da670244ce40bee5bd638a0593c, type: 3}
   buyPrice: 15
   sellingPrice: 15

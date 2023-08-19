@@ -45,6 +45,8 @@ public class GameManager : MonoBehaviour
         DialogueManager.OnDialogueFinish += delegate { onDialogue = false; };
         ShopkeeperTrigger.OnPlayerChoice += delegate { onPlayerChoice = true; };
         ShopkeeperTrigger.OnPlayerChoiceEnded += delegate { onPlayerChoice = false; };
+        LeaveShopTrigger.OnPlayerChoiceStart += delegate { onPlayerChoice = true; };
+        LeaveShopTrigger.OnPlayerChoiceEnd += delegate { onPlayerChoice = false; };
         StoreController.OnStoreOpen += delegate { onStore = true; };
         StoreController.OnStoreClose += delegate { onStore = false; };
         InventoryManager.OnInventoryOpen += delegate { onInventory = true; };
@@ -57,6 +59,8 @@ public class GameManager : MonoBehaviour
         DialogueManager.OnDialogueFinish -= delegate { onDialogue = false; };
         ShopkeeperTrigger.OnPlayerChoice -= delegate { onPlayerChoice = true; };
         ShopkeeperTrigger.OnPlayerChoiceEnded -= delegate { onPlayerChoice = false; };
+        LeaveShopTrigger.OnPlayerChoiceStart -= delegate { onPlayerChoice = true; };
+        LeaveShopTrigger.OnPlayerChoiceEnd -= delegate { onPlayerChoice = false; };
         StoreController.OnStoreOpen -= delegate { onStore = true; };
         StoreController.OnStoreClose -= delegate { onStore = false; };
         InventoryManager.OnInventoryOpen -= delegate { onInventory = true; };

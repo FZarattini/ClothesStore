@@ -53,3 +53,6 @@ TagManager:
   - name: PlayerLayer
     uniqueID: 497991315
     locked: 0
+  - name: ClothesLayer
+    uniqueID: 3605105159
+    locked: 0

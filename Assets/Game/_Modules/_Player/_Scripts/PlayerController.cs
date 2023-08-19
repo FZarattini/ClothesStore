@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,12 +17,14 @@ public class PlayerController : MonoBehaviour
     [Title("Currency")]
     [SerializeField, ReadOnly] int currency;
 
-    [SerializeField] AnimationStates defaultState;
-    [SerializeField, ReadOnly] AnimationStates currentState;
+    [SerializeField] PlayerAnimationStates defaultState;
+    [SerializeField, ReadOnly] PlayerAnimationStates currentState;
+
+    public static Action<int> OnCurrencyChanged;
 
     public int Currency => currency;
 
-    private enum AnimationStates
+    public enum PlayerAnimationStates
     {
         IDLE_UP,
         IDLE_HORIZONTAL,
@@ -34,16 +37,19 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         InventoryManager.OnInventoryOpen += ForceIdleDownState;
+        StoreController.OnStoreOpen += ForceIdleUpState;
     }
 
     private void OnDisable()
     {
         InventoryManager.OnInventoryOpen -= ForceIdleDownState;
+        StoreController.OnStoreOpen -= ForceIdleUpState;
     }
 
     private void Awake()
     {
         currency = _playerData.PlayerInitialCurrency;
+        OnCurrencyChanged?.Invoke(currency);
     }
 
     private void Start()
@@ -58,7 +64,7 @@ public class PlayerController : MonoBehaviour
 
         if (_rigidBody.velocity == Vector2.zero || GameManager.Instance.OnDialogue)
         {
-            if(!IsIdleState())
+            if (!IsIdleState())
                 SetIdle();
         }
         else
@@ -74,21 +80,21 @@ public class PlayerController : MonoBehaviour
     {
         switch (currentState)
         {
-            case AnimationStates.IDLE_HORIZONTAL:
-            case AnimationStates.IDLE_DOWN:
-            case AnimationStates.IDLE_UP:
-                    return;
+            case PlayerAnimationStates.IDLE_HORIZONTAL:
+            case PlayerAnimationStates.IDLE_DOWN:
+            case PlayerAnimationStates.IDLE_UP:
+                return;
 
-            case AnimationStates.WALK_HORIZONTAL:
-                ChangeAnimatorState(AnimationStates.IDLE_HORIZONTAL);
+            case PlayerAnimationStates.WALK_HORIZONTAL:
+                ChangeAnimatorState(PlayerAnimationStates.IDLE_HORIZONTAL);
                 break;
 
-            case AnimationStates.WALK_UP:
-                ChangeAnimatorState(AnimationStates.IDLE_UP);
+            case PlayerAnimationStates.WALK_UP:
+                ChangeAnimatorState(PlayerAnimationStates.IDLE_UP);
                 break;
 
-            case AnimationStates.WALK_DOWN:
-                ChangeAnimatorState(AnimationStates.IDLE_DOWN);
+            case PlayerAnimationStates.WALK_DOWN:
+                ChangeAnimatorState(PlayerAnimationStates.IDLE_DOWN);
                 break;
 
             default:
@@ -97,78 +103,82 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    
+
     // Handles the change in movement deciding which animation should be called, prioritizing last movement animation over new movement
     void HandleNewMovement()
     {
         switch (currentState)
         {
-            case AnimationStates.WALK_HORIZONTAL:
+            case PlayerAnimationStates.WALK_HORIZONTAL:
 
-                if(_rigidBody.velocity.x == 0 && _rigidBody.velocity.y != 0)
+                if (_rigidBody.velocity.x == 0 && _rigidBody.velocity.y != 0)
                 {
                     if (_rigidBody.velocity.y > 0)
-                        ChangeAnimatorState(AnimationStates.WALK_UP);
+                        ChangeAnimatorState(PlayerAnimationStates.WALK_UP);
                     else
-                        ChangeAnimatorState(AnimationStates.WALK_DOWN);
+                        ChangeAnimatorState(PlayerAnimationStates.WALK_DOWN);
                 }
 
                 break;
 
-            case AnimationStates.WALK_UP:
+            case PlayerAnimationStates.WALK_UP:
 
                 if (_rigidBody.velocity.y == 0 && _rigidBody.velocity.x != 0)
                 {
-                    ChangeAnimatorState(AnimationStates.WALK_HORIZONTAL);
-                }else if(_rigidBody.velocity.y < 0)
+                    ChangeAnimatorState(PlayerAnimationStates.WALK_HORIZONTAL);
+                }
+                else if (_rigidBody.velocity.y < 0)
                 {
-                    ChangeAnimatorState(AnimationStates.WALK_DOWN);
+                    ChangeAnimatorState(PlayerAnimationStates.WALK_DOWN);
                 }
 
                 break;
 
-            case AnimationStates.WALK_DOWN:
+            case PlayerAnimationStates.WALK_DOWN:
 
-                if(_rigidBody.velocity.y == 0 && _rigidBody.velocity.x != 0)
+                if (_rigidBody.velocity.y == 0 && _rigidBody.velocity.x != 0)
                 {
-                    ChangeAnimatorState(AnimationStates.WALK_HORIZONTAL);
+                    ChangeAnimatorState(PlayerAnimationStates.WALK_HORIZONTAL);
                 }
                 else if (_rigidBody.velocity.y > 0)
                 {
-                    ChangeAnimatorState(AnimationStates.WALK_UP);
+                    ChangeAnimatorState(PlayerAnimationStates.WALK_UP);
                 }
 
                 break;
 
-            case AnimationStates.IDLE_HORIZONTAL:
-            case AnimationStates.IDLE_DOWN:
-            case AnimationStates.IDLE_UP:
+            case PlayerAnimationStates.IDLE_HORIZONTAL:
+            case PlayerAnimationStates.IDLE_DOWN:
+            case PlayerAnimationStates.IDLE_UP:
 
-                ChangeAnimatorState(AnimationStates.WALK_HORIZONTAL);
+                ChangeAnimatorState(PlayerAnimationStates.WALK_HORIZONTAL);
 
                 break;
 
             default:
                 break;
         }
+
     }
 
 
     // Changes the character animation based on the new state
-    void ChangeAnimatorState(AnimationStates newState)
+    void ChangeAnimatorState(PlayerAnimationStates newState)
     {
         if (currentState == newState) return;
 
         _animator.Play(newState.ToString());
+        _playerEquipmentController.ChangeClothesAnimatorState(newState);
 
         currentState = newState;
+
     }
-    
+
     // Flips the sprite of the Character using the absolute values of the scale instead of 1f in case scale values need to be changed in the future
     void SetDirection()
     {
         if (_rigidBody.velocity.x < 0)
-            _spriteRenderer.transform.localScale = new Vector3(- Mathf.Abs(_spriteRenderer.transform.localScale.x), _spriteRenderer.transform.localScale.y, _spriteRenderer.transform.localScale.z);
+            _spriteRenderer.transform.localScale = new Vector3(-Mathf.Abs(_spriteRenderer.transform.localScale.x), _spriteRenderer.transform.localScale.y, _spriteRenderer.transform.localScale.z);
         else
             _spriteRenderer.transform.localScale = new Vector3(Mathf.Abs(_spriteRenderer.transform.localScale.x), _spriteRenderer.transform.localScale.y, _spriteRenderer.transform.localScale.z);
     }
@@ -176,24 +186,34 @@ public class PlayerController : MonoBehaviour
     // Checks is player is in any of the Idle States
     bool IsIdleState()
     {
-        return currentState == AnimationStates.IDLE_HORIZONTAL || currentState == AnimationStates.IDLE_UP || currentState == AnimationStates.IDLE_DOWN;
+        return currentState == PlayerAnimationStates.IDLE_HORIZONTAL || currentState == PlayerAnimationStates.IDLE_UP || currentState == PlayerAnimationStates.IDLE_DOWN;
     }
 
     // Spends player money
     public void DeductCurrency(int value)
     {
         currency -= value;
+        OnCurrencyChanged?.Invoke(currency);
     }
 
     // Add player money
     public void AddCurrency(int value)
     {
         currency += value;
+        OnCurrencyChanged?.Invoke(currency);
     }
 
     // Forces player to look down to the camera
     void ForceIdleDownState()
     {
-        ChangeAnimatorState(AnimationStates.IDLE_DOWN);   
+        _rigidBody.velocity = Vector2.zero;
+        ChangeAnimatorState(PlayerAnimationStates.IDLE_DOWN);
+    }
+
+    // Forces player to look up with the back to the camera
+    void ForceIdleUpState()
+    {
+        _rigidBody.velocity = Vector2.zero;
+        ChangeAnimatorState(PlayerAnimationStates.IDLE_UP);
     }
 }

@@ -8,7 +8,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
-using static UnityEditor.Timeline.TimelinePlaybackControls;
 
 public class StoreController : MonoBehaviour
 {
@@ -40,6 +39,12 @@ public class StoreController : MonoBehaviour
     {
         ItemSlot.OnBuyItem -= RemoveStockItem;
         ItemSlot.OnSellItem -= AddStockItem;
+    }
+
+    private void Start()
+    {
+        // Reset store's stock
+        _storeStock.SetInitialStoreStock(); 
     }
 
     public void OpenBuyStore()
@@ -84,12 +89,14 @@ public class StoreController : MonoBehaviour
         _storeContainer.Hide();
     }
 
+    // Called whenever player sells an item
     void AddStockItem(ClothingItemData itemData)
     {
         _storeStock.AddItem(itemData);
         CheckEmptyMessage(false);
     }
 
+    // Called whenever player buys an item
     void RemoveStockItem(ClothingItemData itemData)
     {
         _storeStock.RemoveItem(itemData);
@@ -106,6 +113,7 @@ public class StoreController : MonoBehaviour
         itemSlot.SetItemSlot(data, inStock);
     }
 
+    // Checks if should display empty items lists messages
     void CheckEmptyMessage(bool isBuyShop)
     {
         if (isBuyShop)
@@ -120,6 +128,8 @@ public class StoreController : MonoBehaviour
         }
     }
 
+
+    // Destroys every Item slot
     void ClearItemSlots(Transform content)
     {
         while (content.childCount > 0)

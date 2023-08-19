@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 using Sirenix.OdinInspector;
-using static UnityEditor.Progress;
+using System;
 
 public class EquipmentManager : MonoBehaviour
 {
@@ -14,6 +14,9 @@ public class EquipmentManager : MonoBehaviour
     [SerializeField, Sirenix.OdinInspector.ReadOnly] PlayerEquipmentController _playerEquipmentController;
     [SerializeField, Sirenix.OdinInspector.ReadOnly] Transform _playerHatAnchor;
     [SerializeField, Sirenix.OdinInspector.ReadOnly] Transform _playerBodyAnchor;
+
+    public static Action<GameObject> OnHatEquipped = null;
+    public static Action<GameObject> OnBodyEquipped = null;
 
     private void OnEnable()
     {
@@ -60,10 +63,17 @@ public class EquipmentManager : MonoBehaviour
         switch (equipment.clothesType)
         {
             case ClothesType.Hat:
-                Instantiate(equipmentPrefab, _playerHatAnchor);
+                var hatObj = Instantiate(equipmentPrefab, _playerHatAnchor);
+
+                OnHatEquipped?.Invoke(hatObj);
+                
                 break;
             case ClothesType.Body:
-                Instantiate(equipmentPrefab, _playerBodyAnchor);
+
+                var bodyObj = Instantiate(equipmentPrefab, _playerBodyAnchor);
+
+                OnBodyEquipped?.Invoke(bodyObj);
+
                 break;
 
             default:
@@ -71,18 +81,18 @@ public class EquipmentManager : MonoBehaviour
         }
     }
 
-    // Clears previewsly equiped item
+    // Clears previously equiped item
     public void ClearCurrentEquipment(ClothesType clothesType)
     {
         switch (clothesType)
         {
             case ClothesType.Hat:
-                while (_playerHatAnchor.childCount > 0)
-                    DestroyImmediate(_playerHatAnchor.GetChild(0));
+                if(_playerHatAnchor.childCount != 0)
+                    DestroyImmediate(_playerHatAnchor.GetChild(0).gameObject);
                 break;
             case ClothesType.Body:
-                while (_playerBodyAnchor.childCount > 0)
-                    DestroyImmediate(_playerBodyAnchor.GetChild(0));
+                if (_playerBodyAnchor.childCount != 0)
+                    DestroyImmediate(_playerBodyAnchor.GetChild(0).gameObject);
                 break;
 
             default:

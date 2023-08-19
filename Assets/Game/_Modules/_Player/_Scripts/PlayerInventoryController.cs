@@ -18,6 +18,11 @@ public class PlayerInventoryController : MonoBehaviour
         ItemSlot.OnSellItem -= RemoveFromInventory;
     }
 
+    private void Start()
+    {
+        _playerInventory.SetInitialPlayerInventory();
+    }
+
     void AddToInventory(ClothingItemData itemData)
     {
         _playerInventory.AddItem(itemData);
