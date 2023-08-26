@@ -46,14 +46,11 @@ public class PlayerController : MonoBehaviour
         StoreController.OnStoreOpen -= ForceIdleUpState;
     }
 
-    private void Awake()
+    private void Start()
     {
         currency = _playerData.PlayerInitialCurrency;
         OnCurrencyChanged?.Invoke(currency);
-    }
 
-    private void Start()
-    {
         ChangeAnimatorState(defaultState);
     }
 

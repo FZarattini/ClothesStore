@@ -19,7 +19,6 @@ public class HUDController : MonoBehaviour
         PlayerController.OnCurrencyChanged -= UpdateCurrencyValue;
     }
 
-
     // Displays the current currency value on the HUD
     void UpdateCurrencyValue(int value)
     {
