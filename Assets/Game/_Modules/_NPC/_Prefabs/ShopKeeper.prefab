@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 1881175827725735653}
   - component: {fileID: 1105220905164745588}
   m_Layer: 0
-  m_Name: PlayerSprite
+  m_Name: ShopkeeperSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -169,7 +169,7 @@ SpriteRenderer:
   m_SortingLayerID: 851153851
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1734158852, guid: b025a83e848a73b4693ed3200949b5fd, type: 3}
+  m_Sprite: {fileID: -927406940, guid: b025a83e848a73b4693ed3200949b5fd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -225,7 +225,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7047846442692764303}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.617, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -291,7 +291,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8865970987122024578}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.009, y: -0.395, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -317,11 +317,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7890847784912324466, guid: ada194292f7d9f14a816f2722da8ac4e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.005
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7890847784912324466, guid: ada194292f7d9f14a816f2722da8ac4e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.161
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7890847784912324466, guid: ada194292f7d9f14a816f2722da8ac4e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -358,7 +358,7 @@ PrefabInstance:
     - target: {fileID: 8624796213491397522, guid: ada194292f7d9f14a816f2722da8ac4e, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -1357970818, guid: c2e836574c94cf149a0f9d3b293736c8, type: 3}
+      objectReference: {fileID: 309041986, guid: a4d0b7643aba5154a9a169710ec58f53, type: 3}
     - target: {fileID: 8624796213491397522, guid: ada194292f7d9f14a816f2722da8ac4e, type: 3}
       propertyPath: m_SortingLayer
       value: 3
@@ -642,6 +642,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8624796213491397522, guid: 73b1af18468a44a44b3b58ca899327ea, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -134842606, guid: 5ef34a69a7a6990429a060e2a13cab1e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
