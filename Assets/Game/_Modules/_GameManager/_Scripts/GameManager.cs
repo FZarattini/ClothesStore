@@ -16,10 +16,6 @@ public class GameManager : MonoBehaviour
     [SerializeField, ReadOnly] bool onStore = false;
     [SerializeField, ReadOnly] bool onInventory = false;
 
-    [Title("Global Values")]
-
-    [SerializeField] int playerCurrency;
-
     public bool OnDialogue
     {
         get => onDialogue;
