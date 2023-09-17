@@ -11,7 +11,11 @@ public class ItemListSO : ScriptableObject
 
     [SerializeField, HideInInspector] ItemListSO _defaultStoreItems;
 
-    public List<ClothingItemData> ItemsList => _itemsList;
+    public List<ClothingItemData> ItemsList
+    {
+        get => _itemsList;
+        set => _itemsList = value;
+    }
 
     // Adds an item to the list
     public void AddItem(ClothingItemData itemData)

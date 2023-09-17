@@ -20,7 +20,8 @@ public class PlayerInventoryController : MonoBehaviour
 
     private void Start()
     {
-        _playerInventory.SetInitialPlayerInventory();
+        if(!SaveManager.Instance.SavedInventory)
+            _playerInventory.SetInitialPlayerInventory();
     }
 
     void AddToInventory(ClothingItemData itemData)

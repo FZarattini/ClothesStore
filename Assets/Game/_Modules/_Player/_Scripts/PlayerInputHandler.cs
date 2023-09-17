@@ -15,6 +15,7 @@ public class PlayerInputHandler : MonoBehaviour
     private Vector2 movementVector = Vector2.zero;
 
     public static Action OnNextDialog;
+    public static Action OnPause;
 
     private void Awake()
     {
@@ -28,6 +29,7 @@ public class PlayerInputHandler : MonoBehaviour
         input.Player.Movement.canceled += OnMovementCancelled;
         input.Player.Interaction.performed += OnInteractionPerformed;
         input.Player.NextDialog.performed += OnNextDialoguePerformed;
+        input.Player.Pause.performed += OnPausePerformed;
     }
 
     private void OnDisable()
@@ -37,6 +39,7 @@ public class PlayerInputHandler : MonoBehaviour
         input.Player.Movement.canceled -= OnMovementCancelled;
         input.Player.Interaction.performed -= OnInteractionPerformed;
         input.Player.NextDialog.performed -= OnNextDialoguePerformed;
+        input.Player.Pause.performed -= OnPausePerformed;
     }
 
     private void FixedUpdate()
@@ -71,5 +74,11 @@ public class PlayerInputHandler : MonoBehaviour
     private void OnMovementCancelled(InputAction.CallbackContext context)
     {
         movementVector = Vector2.zero;
+    }
+
+    // On Player Pause
+    private void OnPausePerformed(InputAction.CallbackContext context)
+    {
+        OnPause?.Invoke();
     }
 }

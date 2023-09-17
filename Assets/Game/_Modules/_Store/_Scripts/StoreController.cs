@@ -44,7 +44,8 @@ public class StoreController : MonoBehaviour
     private void Start()
     {
         // Reset store's stock
-        _storeStock.SetInitialStoreStock(); 
+        if(!SaveManager.Instance.SavedStoreStock)
+            _storeStock.SetInitialStoreStock(); 
     }
 
     public void OpenBuyStore()

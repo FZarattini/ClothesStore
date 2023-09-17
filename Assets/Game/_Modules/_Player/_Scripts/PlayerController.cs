@@ -38,17 +38,24 @@ public class PlayerController : MonoBehaviour
     {
         InventoryManager.OnInventoryOpen += ForceIdleDownState;
         StoreController.OnStoreOpen += ForceIdleUpState;
+        SaveManager.OnGameLoaded += PlayerStart;
     }
 
     private void OnDisable()
     {
         InventoryManager.OnInventoryOpen -= ForceIdleDownState;
         StoreController.OnStoreOpen -= ForceIdleUpState;
+        SaveManager.OnGameLoaded -= PlayerStart;
     }
 
-    private void Start()
+
+    void PlayerStart()
     {
-        currency = _playerData.PlayerInitialCurrency;
+        if (!SaveManager.Instance.SavedCurrency)
+            currency = _playerData.PlayerInitialCurrency;
+        else
+            currency = SaveManager.Instance.CurrentCurrency;
+
         OnCurrencyChanged?.Invoke(currency);
 
         ChangeAnimatorState(defaultState);

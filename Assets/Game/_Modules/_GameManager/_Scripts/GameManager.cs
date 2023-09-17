@@ -7,14 +7,12 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    [Title("References")]
-    [SerializeField] PlayerData _playerData = null;
-
     [Title("GameStates")]
     [SerializeField, ReadOnly] bool onDialogue = false;
     [SerializeField, ReadOnly] bool onPlayerChoice = false;
     [SerializeField, ReadOnly] bool onStore = false;
     [SerializeField, ReadOnly] bool onInventory = false;
+    [SerializeField, ReadOnly] bool onGamePause = false;
 
     public bool OnDialogue
     {
@@ -47,6 +45,8 @@ public class GameManager : MonoBehaviour
         StoreController.OnStoreClose += delegate { onStore = false; };
         InventoryManager.OnInventoryOpen += delegate { onInventory = true; };
         InventoryManager.OnInventoryClose += delegate { onInventory = false; };
+        PauseController.OnGamePauseOpen += delegate { onGamePause = true; };
+        PauseController.OnGamePauseClose += delegate { onGamePause = false; };
     }
 
     private void OnDisable()
@@ -61,11 +61,13 @@ public class GameManager : MonoBehaviour
         StoreController.OnStoreClose -= delegate { onStore = false; };
         InventoryManager.OnInventoryOpen -= delegate { onInventory = true; };
         InventoryManager.OnInventoryClose -= delegate { onInventory = false; };
+        PauseController.OnGamePauseOpen -= delegate { onGamePause = true; };
+        PauseController.OnGamePauseClose -= delegate { onGamePause = false; };
     }
 
     public bool CanMoveOrInteract()
     {
-        return !onDialogue && !onPlayerChoice && !onStore && !onInventory;
+        return !onDialogue && !onPlayerChoice && !onStore && !onInventory && !onGamePause;
     }
 
 }
