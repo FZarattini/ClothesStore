@@ -92,7 +92,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _shopkeeperMenu: {fileID: 9019423570362482189}
   _storeController: {fileID: 0}
-  _shopDialogue: {fileID: 11400000, guid: fc85b589e0481f04fa100a0c97a410bb, type: 2}
+  _notClothedShopDialogue: {fileID: 11400000, guid: fc85b589e0481f04fa100a0c97a410bb, type: 2}
+  _clothedShopDialogue: {fileID: 11400000, guid: 1cf52585f2b2bb44ead70f68ff491051, type: 2}
 --- !u!1 &5438036446915696125
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,7 +266,7 @@ Transform:
   - {fileID: 1412216881941247402}
   - {fileID: 4529687338486744964}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8865970987122024578
 GameObject:
@@ -435,7 +436,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 584613179099273781, guid: e5cb52723483ff141b498f45ef8e510e, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 182.90182
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2845554222470593509, guid: e5cb52723483ff141b498f45ef8e510e, type: 3}
       propertyPath: m_AnchorMax.y
@@ -531,7 +532,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7845103690468618902, guid: e5cb52723483ff141b498f45ef8e510e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 106.284386
+      value: 172
       objectReference: {fileID: 0}
     - target: {fileID: 7845103690468618902, guid: e5cb52723483ff141b498f45ef8e510e, type: 3}
       propertyPath: m_LocalPosition.z

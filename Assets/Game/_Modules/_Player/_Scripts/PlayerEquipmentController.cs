@@ -12,6 +12,11 @@ public class PlayerEquipmentController : EquipmentController
     [SerializeField, ReadOnly] Animator _hatAnimator = null;
     [SerializeField, ReadOnly] Animator _bodyAnimator = null;
 
+    public bool Clothed
+    {
+        get => _hatObj != null && _bodyObj != null;   
+    }
+
     private void OnEnable()
     {
         EquipmentManager.OnHatEquipped += SetHatAnimatorAndObject;

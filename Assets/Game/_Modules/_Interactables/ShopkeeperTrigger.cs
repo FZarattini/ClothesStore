@@ -10,7 +10,8 @@ public class ShopkeeperTrigger : MonoBehaviour, IInteractables
     [Title("References")]
     [SerializeField] UIContainer _shopkeeperMenu;
     [SerializeField] StoreController _storeController;
-    [SerializeField] DialogueSO _shopDialogue;
+    [SerializeField] DialogueSO _notClothedShopDialogue;
+    [SerializeField] DialogueSO _clothedShopDialogue;
 
     public static Action OnPlayerChoice = null;
     public static Action OnPlayerChoiceEnded = null;
@@ -19,7 +20,13 @@ public class ShopkeeperTrigger : MonoBehaviour, IInteractables
     
     public void Interact()
     {
-        OnShopkeeperInteraction?.Invoke(_shopDialogue, OpenShopkeeperMenu);
+        PlayerController player = FindObjectOfType<PlayerController>();
+
+        if (player.PlayerClothed)
+            OnShopkeeperInteraction?.Invoke(_clothedShopDialogue, OpenShopkeeperMenu);
+        else
+            OnShopkeeperInteraction?.Invoke(_notClothedShopDialogue, OpenShopkeeperMenu);
+
     }
 
     // Open shop choices menu (Buy / Sell / Leave)
@@ -28,18 +35,21 @@ public class ShopkeeperTrigger : MonoBehaviour, IInteractables
         OnPlayerChoice?.Invoke();
         _shopkeeperMenu.Show();
     }
+
     public void CloseShopkeeperMenu()
     {
         OnPlayerChoiceEnded?.Invoke();
         _shopkeeperMenu.Hide();
     }
 
+    // Opens the UI for buying items on the store
     public void OpenBuyStore()
     {
         _storeController.OpenBuyStore();
         CloseShopkeeperMenu();
     }
 
+    // Opens the UI for selling items on the store
     public void OpenSellStore()
     {
         _storeController.OpenSellStore();

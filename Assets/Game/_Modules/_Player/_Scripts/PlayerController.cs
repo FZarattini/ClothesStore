@@ -24,6 +24,11 @@ public class PlayerController : MonoBehaviour
 
     public int Currency => currency;
 
+    public bool PlayerClothed
+    {
+        get => _playerEquipmentController.Clothed;
+    }
+
     public enum PlayerAnimationStates
     {
         IDLE_UP,

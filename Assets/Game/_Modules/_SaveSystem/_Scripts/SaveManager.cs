@@ -24,12 +24,14 @@ public class SaveManager : MonoBehaviour
     private const string STORE_STOCK_ITEM = "STORE_STOCK_ITEM";
     private const string PLAYER_INVENTORY_SAVED = "PLAYER_INVENTORY_SAVED";
     private const string STORE_STOCK_SAVED = "STORE_STOCK_SAVED";
+    private const string BARREL_INTERACTED = "BARREL_INTERACTED";
+
 
     public int CurrentCurrency => currentCurrency;
 
     public bool SavedInventory
     {
-        get => PlayerPrefs.GetInt(PLAYER_INVENTORY_SAVED, 0) == 1; 
+        get => PlayerPrefs.GetInt(PLAYER_INVENTORY_SAVED, 0) == 1;
     }
 
     public bool SavedStoreStock
@@ -81,6 +83,7 @@ public class SaveManager : MonoBehaviour
         currentCurrency = value;
     }
 
+    // Saves all the game data
     void SaveGameData()
     {
         SavePlayerCurrency();
@@ -88,11 +91,13 @@ public class SaveManager : MonoBehaviour
         SaveStoreStock();
     }
 
+    // Clears all of the saved game data
     void ClearGameData()
     {
         PlayerPrefs.DeleteAll();
     }
 
+    // Loads all the game data
     void LoadGameData()
     {
         LoadPlayerCurrency();
@@ -102,6 +107,7 @@ public class SaveManager : MonoBehaviour
         OnGameLoaded?.Invoke();
     }
 
+    // Saves the Player currency
     #region Player Currency Methods
     void SavePlayerCurrency()
     {
@@ -109,7 +115,8 @@ public class SaveManager : MonoBehaviour
         PlayerPrefs.SetInt(PLAYER_CURRENCY_SAVED, 1);
     }
 
-    public void  LoadPlayerCurrency()
+    // Loads the Player currency
+    public void LoadPlayerCurrency()
     {
         currentCurrency = PlayerPrefs.GetInt(PLAYER_CURRENCY);
     }
@@ -118,6 +125,7 @@ public class SaveManager : MonoBehaviour
 
     #region Inventory Methods
 
+    // Saves the inventory item list
     void SaveInventory()
     {
         ClearInventoryData();
@@ -134,6 +142,7 @@ public class SaveManager : MonoBehaviour
         PlayerPrefs.SetInt(PLAYER_INVENTORY_SAVED, 1);
     }
 
+    // Clears the inventory saved data
     void ClearInventoryData()
     {
         var quantity = PlayerPrefs.GetInt(PLAYER_INVENTORY_QUANTITY);
@@ -146,7 +155,7 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-
+    // Loads the inventory item list
     void LoadInventory()
     {
         List<ClothingItemData> items = new List<ClothingItemData>();
@@ -174,6 +183,7 @@ public class SaveManager : MonoBehaviour
 
     #region Store Stock Methods
 
+    // Saves the item list of the store stock
     void SaveStoreStock()
     {
         ClearStoreStockData();
@@ -190,6 +200,7 @@ public class SaveManager : MonoBehaviour
         PlayerPrefs.SetInt(STORE_STOCK_SAVED, 1);
     }
 
+    // Loads the item list of the store stock
     void LoadStoreStock()
     {
         List<ClothingItemData> items = new List<ClothingItemData>();
@@ -213,6 +224,7 @@ public class SaveManager : MonoBehaviour
         _storeStock.ItemsList = new List<ClothingItemData>(items);
     }
 
+    // Clear the saved Data for the store stock
     void ClearStoreStockData()
     {
         var quantity = PlayerPrefs.GetInt(STORE_STOCK_QUANTITY);
@@ -226,4 +238,20 @@ public class SaveManager : MonoBehaviour
     }
 
     #endregion Store Stock Methods
+
+    #region Interactions
+
+    // Save and Load for interactions that should happen only once
+
+    public void SaveBarrelInteracted()
+    {
+        PlayerPrefs.SetInt(BARREL_INTERACTED, 1);
+    }
+
+    public int LoadBarrelInteracted()
+    {
+        return PlayerPrefs.GetInt(BARREL_INTERACTED, 0);
+    }
+
+    #endregion Interactions
 }

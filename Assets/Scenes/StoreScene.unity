@@ -6997,69 +6997,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3586360866127698935, guid: df6cf70e54530c1438a26ec72ea0eab9, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3586360866127698935, guid: df6cf70e54530c1438a26ec72ea0eab9, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3586360866127698935, guid: df6cf70e54530c1438a26ec72ea0eab9, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3586360866127698935, guid: df6cf70e54530c1438a26ec72ea0eab9, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4529687338486744964, guid: df6cf70e54530c1438a26ec72ea0eab9, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 172
-      objectReference: {fileID: 0}
     - target: {fileID: 5811040486816722313, guid: df6cf70e54530c1438a26ec72ea0eab9, type: 3}
       propertyPath: _storeController
       value: 
       objectReference: {fileID: 2025323853}
-    - target: {fileID: 5974035284978904178, guid: df6cf70e54530c1438a26ec72ea0eab9, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5974035284978904178, guid: df6cf70e54530c1438a26ec72ea0eab9, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5974035284978904178, guid: df6cf70e54530c1438a26ec72ea0eab9, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5974035284978904178, guid: df6cf70e54530c1438a26ec72ea0eab9, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6493962005543907111, guid: df6cf70e54530c1438a26ec72ea0eab9, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7953500145157289868, guid: df6cf70e54530c1438a26ec72ea0eab9, type: 3}
       propertyPath: m_Name
       value: ShopKeeper
-      objectReference: {fileID: 0}
-    - target: {fileID: 8466405433179000567, guid: df6cf70e54530c1438a26ec72ea0eab9, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8466405433179000567, guid: df6cf70e54530c1438a26ec72ea0eab9, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8466405433179000567, guid: df6cf70e54530c1438a26ec72ea0eab9, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8466405433179000567, guid: df6cf70e54530c1438a26ec72ea0eab9, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

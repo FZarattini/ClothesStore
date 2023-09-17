@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 818b2852d9d13f542a189ad841fb0098, type: 3}
-  m_Name: ShopDialogue
+  m_Name: ShopDialogue_NotClothed
   m_EditorClassIdentifier: 
   dialogueText:
   - Why...Why are you naked? Well..
